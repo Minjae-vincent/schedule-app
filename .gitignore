@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 클로드 관련된 내용
+AGENTS.md
+CLAUDE.md
+PRODUCT.md
+
+.CLAUDE
