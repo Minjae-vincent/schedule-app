@@ -1,17 +1,14 @@
 import { notFound } from 'next/navigation'
 import { Card, CardContent } from '@/components/ui/card'
-import { JoinFlow } from '@/components/group/JoinFlow'
+import { VoteForm } from '@/components/vote/VoteForm'
 import { supabaseAdmin } from '@/lib/supabase/server'
 
-export default async function JoinPage({
+export default async function VotePage({
   params,
-  searchParams,
 }: {
   params: Promise<{ id: string }>
-  searchParams: Promise<{ as?: string }>
 }) {
   const { id: token } = await params
-  const { as: presetNickname } = await searchParams
 
   const { data: group } = await supabaseAdmin
     .from('groups')
@@ -25,19 +22,17 @@ export default async function JoinPage({
     <main className="flex-1 flex flex-col items-center justify-center px-4 py-12">
       <div className="max-w-md w-full space-y-6">
         <div>
-          <p className="text-sm text-blue-600 font-medium">초대받았습니다</p>
-          <h1 className="text-2xl font-bold text-gray-900 mt-1">{group.name}</h1>
-          <p className="text-sm text-gray-500 mt-1">주최자: {group.creator_nickname}</p>
+          <h1 className="text-2xl font-bold text-gray-900">{group.name}</h1>
+          <p className="text-sm text-gray-500 mt-1">가능한 날짜를 입력하세요</p>
         </div>
 
         <Card>
           <CardContent className="pt-6">
-            <JoinFlow
+            <VoteForm
               token={token}
               dateRangeStart={group.date_range_start}
               dateRangeEnd={group.date_range_end}
               voteMode={group.vote_mode as 'date_only' | 'date_time'}
-              presetNickname={presetNickname}
             />
           </CardContent>
         </Card>

@@ -1,4 +1,14 @@
 export type GroupStatus = 'voting' | 'confirmed'
+export type VoteMode = 'date_only' | 'date_time'
+
+// 시간 슬롯: 두 자리 시각 문자열, e.g. '09', '10', ..., '22'
+export type TimeSlot = string
+
+// 9시 ~ 22시, 1시간 단위 14개 슬롯
+export const VALID_HOURS: readonly TimeSlot[] = Array.from(
+  { length: 14 },
+  (_, i) => String(i + 9).padStart(2, '0'),
+)
 
 export interface Group {
   id: string
@@ -7,6 +17,7 @@ export interface Group {
   creator_nickname: string
   date_range_start: string
   date_range_end: string
+  vote_mode: VoteMode
   status: GroupStatus
   confirmed_date: string | null
   confirmed_region: string | null
@@ -30,5 +41,5 @@ export interface DateVote {
   group_id: string
   member_id: string
   vote_date: string
-  preference: 'available' | 'if_needed'
+  time_slots: TimeSlot[]
 }

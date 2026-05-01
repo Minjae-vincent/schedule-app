@@ -36,7 +36,9 @@ export function JoinForm({ token }: Props) {
         return
       }
 
+      // 대시보드로 이동 후 서버 캐시 무효화
       router.push(`/group/${token}`)
+      router.refresh()
     } catch {
       setError('네트워크 오류가 발생했습니다.')
     } finally {
